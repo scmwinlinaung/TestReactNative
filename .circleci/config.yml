@@ -1,3 +1,5 @@
+# To add orbs 
+
 orbs:
   rn: react-native-community/react-native@1.0.0
 commands:
@@ -109,7 +111,8 @@ jobs:
     steps:
     - checkout
     - run: npm install
-    - run: cd android && ./gradlew assembleRelease
+    - run: cd android && 
+    ./gradlew assembleRelease
 version: 2.1
 
 
