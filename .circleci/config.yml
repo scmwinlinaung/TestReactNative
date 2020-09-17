@@ -133,6 +133,9 @@ executors:
         type: enum
 jobs:
   build:
+    node:
+    docker:
+      - image: circleci/node:13
     description: |
       Start building an Android project on CircleCI
     executor:
