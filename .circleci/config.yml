@@ -1,42 +1,6 @@
-
-# jobs:
-#   node:
-#     docker:
-#       - image: circleci/node:8
-#     steps:
-#       - checkout
-#       - run: npm install
-# android:
-#     docker:
-#       - image: circleci/android:api-30-node8-alpha
-#     steps:
-#       - checkout
-#       - run: npm install
-#       - run: cd android && ./gradlew assembleRelease
-# ios:
-#     macos:
-#       xcode: "12"
-#   # use a --login shell so our "set Ruby version" command gets picked up for later steps
-#     shell: /bin/bash --login -o pipefail
-# steps:
-#   - checkout
-#   - run: npm install
-#   - run: xcodebuild -project ios/MyApp.xcodeproj -scheme "MyApp" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.4,name=iPhone X'
-# This code is licensed from CircleCI to the user under the MIT license. See
-# https://circleci.com/orbs/registry/licensing for details.
+orbs:
+  rn: react-native-community/react-native@1.0.0
 commands:
-  accept-licenses:
-    description: |
-      Accept all Android SDK Manager licenses
-    steps:
-    - run:
-        command: |
-          yes | sdkmanager --licenses
-          yes | sdkmanager --update
-        description: |
-          Accepts all Android SDK licenses. This command is typically not necessary to execute, since the CircleCI convenience images ship with all licenses accepted. This command will add approximately 10 seconds to the build time.
-        name: Accept Android Licenses
-        shell: /bin/bash -e
   install-ndk:
     description: |
       Extend CircleCI's Android convenience images by installing a version of the Android NDK of your choice.
@@ -135,7 +99,8 @@ jobs:
   build:
     node:
     docker:
-      - image: circleci/node:13
+      - image: circleci/node:latest
+      - image: java:8
     description: |
       Start building an Android project on CircleCI
     executor:
@@ -143,7 +108,8 @@ jobs:
       sdk-version: "27"
     steps:
     - checkout
-    - accept-licenses
     - run: npm install
     - run: cd android && ./gradlew assembleRelease
 version: 2.1
+
+
