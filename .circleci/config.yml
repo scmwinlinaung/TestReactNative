@@ -1,3 +1,27 @@
+
+# jobs:
+#   node:
+#     docker:
+#       - image: circleci/node:8
+#     steps:
+#       - checkout
+#       - run: npm install
+# android:
+#     docker:
+#       - image: circleci/android:api-30-node8-alpha
+#     steps:
+#       - checkout
+#       - run: npm install
+#       - run: cd android && ./gradlew assembleRelease
+# ios:
+#     macos:
+#       xcode: "12"
+#   # use a --login shell so our "set Ruby version" command gets picked up for later steps
+#     shell: /bin/bash --login -o pipefail
+# steps:
+#   - checkout
+#   - run: npm install
+#   - run: xcodebuild -project ios/MyApp.xcodeproj -scheme "MyApp" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.4,name=iPhone X'
 # This code is licensed from CircleCI to the user under the MIT license. See
 # https://circleci.com/orbs/registry/licensing for details.
 commands:
@@ -117,4 +141,6 @@ jobs:
     steps:
     - checkout
     - accept-licenses
+    - run: npm install
+    - run: cd android && ./gradlew assembleRelease
 version: 2.1
