@@ -140,7 +140,7 @@ jobs:
       Start building an Android project on CircleCI
     executor:
       name: android
-      sdk-version: "23"
+      sdk-version: "27"
     steps:
     - checkout
     - accept-licenses
