@@ -207,6 +207,23 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    flavorDimensions "env"
+    productFlavors {
+        dev {
+            dimension: "env"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-DEV"
+        }
+        staging {
+            dimension "env"
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-STAGING"
+        }
+        prod {
+            dimension "env"
+        }
+    }
 }
 
 // Run this once to be able to run the application with BUCK
