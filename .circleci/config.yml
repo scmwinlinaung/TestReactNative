@@ -99,7 +99,6 @@ jobs:
     node:
     docker:
       - image: circleci/node:latest
-      - image: circleci/openjdk:11.0.3-jdk-stretch
     environment:
       JVM_OPTS: -Xmx3200m
     description: |
@@ -110,6 +109,11 @@ jobs:
     steps:
     - checkout
     - run: npm install
+    - run:
+        command: |
+          sudo apt install default-jdk
+          sudo ANDROID_SDK_ROOT=/usr/local/android-sdk-linux 
+          javac -version
     - run: cd android && ./gradlew assembleRelease
 version: 2.1
 
