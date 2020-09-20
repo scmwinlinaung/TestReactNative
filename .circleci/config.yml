@@ -8,9 +8,12 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - run: npm install
       - run:
-          name: Run Tests
-          command: ./gradlew lint test
+          command: | 
+            echo "export JAVA_HOME=/opt/android/jre" >> $BASH_ENV
+            echo JAVA_HOME
+      - run: cd android && ./gradlew assembleRelease
       
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/ 
           path: app/build/reports
