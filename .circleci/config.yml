@@ -113,6 +113,9 @@ jobs:
         command: |
           sudo apt install default-jdk
           javac -version
+          touch /home/circleci/project/android/local.properties
+          echo "sdk.dir=/usr/lib/android-sdk/" >> /home/circleci/project/android/local.properties
+
     - run: cd android && ./gradlew assembleRelease
 version: 2.1
 
