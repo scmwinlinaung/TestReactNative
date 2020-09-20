@@ -112,7 +112,7 @@ jobs:
     - run:
         command: |
           sudo apt install default-jdk
-          sudo ANDROID_SDK_ROOT=/usr/local/android-sdk-linux 
+          sudo ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
           javac -version
     - run: cd android && ./gradlew assembleRelease
 version: 2.1
