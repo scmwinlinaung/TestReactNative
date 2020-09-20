@@ -1,7 +1,5 @@
-# To add orbs 
 
-orbs:
-  rn: react-native-community/react-native@1.0.0
+
 commands:
   install-ndk:
     description: |
@@ -99,6 +97,8 @@ executors:
         type: enum
 jobs:
   build:
+    environment:
+      BASH_ENV: ~/.bashrc steps: run: echo 'export PATH=/path/to/foo/bin:$PATH' >> $BASH_ENV run:
     node:
     docker:
       - image: circleci/node:latest
