@@ -98,7 +98,7 @@ executors:
 jobs:
   build:
     environment:
-      BASH_ENV: ~/.bashrc steps: run: echo 'export PATH=/path/to/foo/bin:$PATH' >> $BASH_ENV run:
+      BASH_ENV: ~/.bashrc 
     node:
     docker:
       - image: circleci/node:latest
