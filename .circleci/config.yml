@@ -110,10 +110,10 @@ jobs:
     - checkout
     - run: npm install
     - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
+        key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+    - run:
+        name: Download Dependencies
+        command: ./gradlew androidDependencies
     - save_cache:
         paths:
             - ~/.gradle
