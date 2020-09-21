@@ -114,7 +114,6 @@ jobs:
         command: |
           sudo apt install default-jdk
           sudo apt update && sudo apt install android-sdk
-          javac -version
 
     - run: cd android && ./gradlew assembleRelease
 version: 2.1
