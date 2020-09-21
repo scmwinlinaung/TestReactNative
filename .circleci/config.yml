@@ -115,8 +115,6 @@ jobs:
           sudo apt install default-jdk
           sudo apt update && sudo apt install android-sdk
           javac -version
-          touch /home/circleci/project/android/local.properties
-          echo "export ANDROID_SDK_ROOT=/opt/android-sdk/" >> $BASH_ENV
 
     - run: cd android && ./gradlew assembleRelease
 version: 2.1
