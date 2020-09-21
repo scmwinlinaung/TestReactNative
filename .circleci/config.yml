@@ -2,7 +2,7 @@
 jobs:
   build:
     node:
-       working_directory: ~/TestReactNative
+    working_directory: ~/TestReactNative
     docker:
       - image: circleci/node:latest
     environment:
