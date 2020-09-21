@@ -1,24 +1,106 @@
-
+မောင်ရှိန်း, [21.09.20 14:46]
+version: 2.1
 orbs:
   react-native: react-native-community/react-native@4.4.2
 jobs:
-  build:
-    node:
+  node:
+    working_directory: ~/TestReactNative
     docker:
-      - image: circleci/node:latest
-    environment:
-      JVM_OPTS: -Xmx3200m
-    description: |
-      Start building an Android project on CircleCI
+      - image: cimg/node:12.16
+
     steps:
-    - checkout
-    - run: npm install
-    - run:
-        command: |
-          sudo apt install default-jdk
-          sudo apt update && sudo apt install android-sdk
+      - checkout
 
-    - run: cd android && ./gradlew assembleRelease
-version: 2.1
+      - restore_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run: npm install
+
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}-{{ arch }}
+          paths:
+            - ~/.cache/npm
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
+      - persist_to_workspace:
+          root: ~/TestReactNative
+          paths:
+            - node_modules
+
+  android-build-and-test:
+    working_directory: ~/TestReactNative/android
+    docker:
+      - image: circleci/android:api-29-node
+    steps:
+      - checkout:
+          path: ~/TestReactNative
+
+      - attach_workspace:
+          at: ~/TestReactNative
+
+      - restore_cache:
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+
+      - store_artifacts:
+          path: app/build/outputs/apk/release/app-release.apk
+  
+  ios-build-and-test:
+    macos:
+      xcode: 11.3.0
+    working_directory: ~/TestReactNative
+
+    shell: /bin/bash --login -o pipefail
+steps: 
+      - checkout
+      - run: 
+          name: set Ruby version
+          command: echo "ruby-2.4" > ~/.ruby-version
+
+      - restore_cache:
+          key: npm-v1-{{ checksum "package-log.json" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run: npm install
+
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}-{{ arch }}
+          paths:
+            - ~/.cache/npm
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
+      - restore_cache: 
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+
+      - run: 
+          command: bundle install
+          working_directory: ios
+
+      - save_cache:
+          key: node-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - vendor/bundle
+
+      - store_artifacts: 
+          path: ios/TestRNCICD.ipa
 
 
+workflows:
+  node-android-ios:
+    jobs:
+      - node
+      - android-build-and-test:
+          requires:
+            - node
