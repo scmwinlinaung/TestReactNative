@@ -10,9 +10,6 @@ jobs:
       JVM_OPTS: -Xmx3200m
     description: |
       Start building an Android project on CircleCI
-    executor:
-      name: android
-      sdk-version: "27"
     steps:
     - checkout
     - run: npm install
