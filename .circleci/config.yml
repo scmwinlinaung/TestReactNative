@@ -19,10 +19,9 @@ jobs:
           sudo apt update && sudo apt install android-sdk
           sudo npm install -g react-native-cli
           echo "sdk.dir=~/Android/Sdk/" >> ~/TestReactNative/android/local.properties
-          npx jetify
           go get github.com/yelinaung/local-properties
           go install github.com/yelinaung/local-properties
-          cd home/circleci/TestReactNative/android/
+          cd /home/circleci/TestReactNative/
           local-properties
 
     - run: cd android && ./gradlew assembleRelease
